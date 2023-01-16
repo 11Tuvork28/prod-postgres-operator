@@ -32,6 +32,7 @@ spec:
         repo1-retention-full-type: time
         archive-async: "y"
         spool-path: /var/spool/pgbackrest
+        start-fast: "y"
       image: registry.developers.crunchydata.com/crunchydata/crunchy-pgbackrest:ubi8-2.40-1
       repos:
       - name: repo1
