@@ -27,17 +27,20 @@ spec:
                   postgres-operator.crunchydata.com/instance-set: pgha1
   backups:
     pgbackrest:
+      configuration:
+      - configMap:
+          name: pgbackrest-custom-config
       global:
         repo1-retention-full: "10"
         repo1-retention-full-type: time
         archive-async: "y"
-        spool-path: /var/spool/pgbackrest
+        spool-path: /pgdata/pg14/spool/pgbackrest
         start-fast: "y"
       image: registry.developers.crunchydata.com/crunchydata/crunchy-pgbackrest:ubi8-2.40-1
       repos:
       - name: repo1
         schedules:
-          full: "0 1 * * 0"
+          full: "0 1 * * 7"
           differential: "0 1 * * 1-6"
         volume:
           volumeClaimSpec:
@@ -76,3 +79,7 @@ spec:
                 matchLabels:
                   postgres-operator.crunchydata.com/cluster: hippo
                   postgres-operator.crunchydata.com/role: pgbouncer
+  patroni:
+    dynamicConfiguration:
+      synchronous_mode: true
+      synchronous_mode_strict: true
