@@ -41,7 +41,7 @@ spec:
       - name: repo1
         schedules:
           full: "0 1 * * 7"
-          differential: "0 1 * * 1-6"
+          differential: "0 1 * * 1-7"
         volume:
           volumeClaimSpec:
             storageClassName: "longhorn"
@@ -49,7 +49,7 @@ spec:
             - "ReadWriteOnce"
             resources:
               requests:
-                storage: 10Gi
+                storage: 30Gi
   monitoring:
     pgmonitor:
       exporter:
@@ -83,3 +83,12 @@ spec:
     dynamicConfiguration:
       synchronous_mode: true
       synchronous_mode_strict: true
+      max_wal_size: 8GB
+      autovacuum_vacuum_cost_limit: 1000
+      autovacuum_vacuum_cost_delay: 10ms
+      autovacuum_naptime: 5s
+      vacuum_freeze_table_age: 100000
+      vacuum_freeze_min_age: 100000
+      track_activity_query_size: 2048
+      autovacuum_freeze_max_age: 100000
+      pg_stat_statements.track: all
